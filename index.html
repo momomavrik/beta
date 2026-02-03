@@ -19,9 +19,11 @@ html {
     overflow-y: scroll;
     scroll-behavior: smooth;
     overscroll-behavior: none;
+    background: #212121;
 }
 
 body {
+    background: #212121;
     font-family: 'Clash Display', Arial, Helvetica, sans-serif;
     color: white;
     overscroll-behavior: none;
@@ -460,14 +462,16 @@ body.scroll-locked {
     /* ===== LANDING PAGE ===== */
     
     .navbar {
-        height: 60px;
+        height: 70px;
     }
     
     .navbar-bg {
         background: #212121;
         justify-content: center;
         padding: 0;
-        height: 60px;
+        height: 70px;
+        display: flex;
+        align-items: center;
     }
     
     .navbar-bg .nav-link {
@@ -476,9 +480,9 @@ body.scroll-locked {
     
     #landing .eagle {
         position: absolute;
-        top: 30px;
+        top: 35px;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         right: auto;
         width: 36px;
         z-index: 5;
@@ -976,12 +980,14 @@ body.scroll-locked {
         max-height: none;
         overflow: visible;
         scroll-snap-align: start;
+        background: #171717;
     }
     
     .contact-header {
         padding: 20px;
         min-height: auto;
         flex-shrink: 0;
+        background: #f1f1ec;
     }
     
     .contact-header-content {
@@ -1012,22 +1018,25 @@ body.scroll-locked {
     }
     
     .newsletter-input {
+        flex: 1;
         font-size: 13px;
         padding: 8px 10px;
     }
     
     .newsletter-btn {
-        padding: 8px 16px;
-        font-size: 11px;
+        padding: 10px 16px;
+        font-size: 10px;
+        white-space: nowrap;
     }
     
     .contact-main {
         flex: 1;
-        padding: 40px 20px 60px;
+        padding: 60px 20px 100px;
         min-height: auto;
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: flex-start;
+        background: #171717;
     }
     
     .contact-bg-eagle {
@@ -1076,31 +1085,36 @@ body.scroll-locked {
     
     .social-links {
         justify-content: flex-start;
-        gap: 24px;
-        margin-top: 12px;
+        gap: 48px;
+        margin-top: 16px;
+        width: 100%;
     }
     
     .social-link svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
     }
     
     .contact-right {
         align-items: flex-start;
         width: 100%;
-        gap: 16px;
+        gap: 12px;
+        margin-top: 24px;
     }
     
     .contact-logo {
-        width: 70%;
-        max-width: 260px;
+        width: 60%;
+        max-width: 220px;
     }
     
     .contact-footer {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-        font-size: 11px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 16px;
+        font-size: 10px;
+        margin-top: 12px;
     }
     
     .contact-copyright {
@@ -2294,7 +2308,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline>
+    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -3558,6 +3572,16 @@ document.querySelectorAll('#news .article-card').forEach(card => {
     card.addEventListener('click', () => {
         const url = card.dataset.href;
         if (url) window.open(url, '_blank');
+    });
+});
+
+/* Force video autoplay on iOS */
+document.addEventListener('DOMContentLoaded', function() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        video.play().catch(function(error) {
+            console.log("Video autoplay failed:", error);
+        });
     });
 });
 </script>
