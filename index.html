@@ -1151,14 +1151,14 @@ body.scroll-locked {
     }
     
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
-    
+        
     #contact {
-        height: auto;
-        min-height: 100vh;
-        min-height: 100dvh;
-        max-height: none;
-        overflow: visible;
+        height: 100svh;
+        min-height: 0;
+        max-height: 100svh;
+        overflow-y: auto;
         scroll-snap-align: start;
+        scroll-snap-stop: always;
         background: #171717;
         -webkit-overflow-scrolling: touch;
         position: relative;
