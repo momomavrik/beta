@@ -1151,14 +1151,14 @@ body.scroll-locked {
     }
     
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
-        
+    
     #contact {
-        height: 100svh;
-        min-height: 0;
-        max-height: 100svh;
-        overflow-y: auto;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
+        overflow: visible;
         scroll-snap-align: start;
-        scroll-snap-stop: always;
         background: #171717;
         -webkit-overflow-scrolling: touch;
         position: relative;
@@ -3904,6 +3904,16 @@ document.querySelectorAll('#news .article-card').forEach(card => {
     });
 });
 
+/* Force video autoplay on iOS */
+document.addEventListener('DOMContentLoaded', function() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        video.play().catch(function(error) {
+            console.log("Video autoplay failed:", error);
+        });
+    });
+});
+
 /* ---------- Detail Features Scroll Indicator ---------- */
 document.querySelectorAll('.detail-features').forEach(features => {
     features.addEventListener('scroll', function() {
@@ -3912,16 +3922,6 @@ document.querySelectorAll('.detail-features').forEach(features => {
         } else {
             this.classList.remove('scrolled');
         }
-    });
-});
-
-/* Force video autoplay on iOS */
-document.addEventListener('DOMContentLoaded', function() {
-    const videos = document.querySelectorAll('video');
-    videos.forEach(video => {
-        video.play().catch(function(error) {
-            console.log("Video autoplay failed:", error);
-        });
     });
 });
 </script>
