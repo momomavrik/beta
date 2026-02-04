@@ -2529,7 +2529,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
+    <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -3904,15 +3904,35 @@ document.querySelectorAll('#news .article-card').forEach(card => {
     });
 });
 
-/* Force video autoplay on iOS */
-document.addEventListener('DOMContentLoaded', function() {
-    const videos = document.querySelectorAll('video');
-    videos.forEach(video => {
-        video.play().catch(function(error) {
+// Enhanced video autoplay handling
+function playBackgroundVideo() {
+    const video = document.querySelector('.bg-video');
+    if (video) {
+        video.load(); // Reload to ensure readiness
+        video.play().catch(error => {
             console.log("Video autoplay failed:", error);
+            // Fallback: Try again after a short delay
+            setTimeout(() => video.play(), 500);
         });
+    }
+}
+
+// Use IntersectionObserver to play when landing is visible
+const landingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            playBackgroundVideo();
+        }
     });
-});
+}, { threshold: 0.5 });
+
+const landingSection = document.getElementById('landing');
+if (landingSection) {
+    landingObserver.observe(landingSection);
+}
+
+// Initial call on load
+document.addEventListener('DOMContentLoaded', playBackgroundVideo);
 
 /* ---------- Detail Features Scroll Indicator ---------- */
 document.querySelectorAll('.detail-features').forEach(features => {
