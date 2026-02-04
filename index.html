@@ -457,7 +457,9 @@ body.scroll-locked {
 }
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-    
+    html {
+        scroll-snap-type: y proximity;
+    }
     /* ===== LANDING PAGE ===== */
     
     .navbar {
@@ -1082,17 +1084,9 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        /* Disable scroll snapping for this section on mobile */
-        scroll-snap-align: none;
-        /* Use -webkit-fill-available as primary, with fallbacks */
-        height: 100%;
-        height: -webkit-fill-available;
-        min-height: 100%;
-        min-height: -webkit-fill-available;
-        /* Prevent any height changes from causing reflow */
-        max-height: none;
-        overflow: visible;
-        overflow: clip;
+        height: 100svh;
+        min-height: 100svh;
+        overflow: hidden;
         background: #171717;
         position: relative;
         display: flex;
