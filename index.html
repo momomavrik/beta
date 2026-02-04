@@ -15,8 +15,6 @@
 }
 
 html {
-    height: 100%;
-    height: -webkit-fill-available;
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
     scroll-behavior: smooth;
@@ -47,7 +45,7 @@ body {
 
 /* ---------- GLOBAL ---------- */
 section {
-    height: 100dvh;
+    height: 100vh;
     width: 100%;
     scroll-snap-align: start;
     position: relative;
@@ -100,21 +98,6 @@ section {
     #landing {
         overflow: hidden;
     }
-@supports (-webkit-touch-callout: none) {
-    html {
-        height: -webkit-fill-available;
-    }
-    body {
-        min-height: -webkit-fill-available;
-    }
-    section {
-        height: 100dvh;
-    }
-    #contact {
-        min-height: 100dvh;
-        padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px) + 20px); /* Extra padding to avoid overlap */
-    }
-}
 }
 
 .bg-overlay {
@@ -598,7 +581,7 @@ body.scroll-locked {
     
     #second {
         padding: 16px 16px 12px;
-        height: 100dvh;
+        height: 100vh;
         max-height: 100vh;
         gap: 12px;
         overflow: hidden;
@@ -911,7 +894,7 @@ body.scroll-locked {
     
     #team {
         padding: 50px 20px 30px;
-        height: 100dvh;
+        height: 100vh;
         height: 100dvh;
         max-height: 100vh;
         overflow: hidden;
@@ -1041,7 +1024,7 @@ body.scroll-locked {
     
     #news {
         padding: 16px;
-        height: 100dvh;
+        height: 100vh;
         height: 100dvh;
         max-height: 100vh;
         overflow: hidden;
@@ -1168,10 +1151,12 @@ body.scroll-locked {
     }
     
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
-        
+    
     #contact {
         height: auto;
+        min-height: 100vh;
         min-height: 100dvh;
+        max-height: none;
         overflow: visible;
         scroll-snap-align: start;
         background: #171717;
@@ -2544,7 +2529,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline preload="auto">
+    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -3919,36 +3904,6 @@ document.querySelectorAll('#news .article-card').forEach(card => {
     });
 });
 
-// Enhanced video autoplay handling
-function playBackgroundVideo() {
-    const video = document.querySelector('.bg-video');
-    if (video) {
-        video.load(); // Reload to ensure readiness
-        video.play().catch(error => {
-            console.log("Video autoplay failed:", error);
-            // Fallback: Try again after a short delay
-            setTimeout(() => video.play(), 500);
-        });
-    }
-}
-
-// Use IntersectionObserver to play when landing is visible
-const landingObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            playBackgroundVideo();
-        }
-    });
-}, { threshold: 0.5 });
-
-const landingSection = document.getElementById('landing');
-if (landingSection) {
-    landingObserver.observe(landingSection);
-}
-
-// Initial call on load
-document.addEventListener('DOMContentLoaded', playBackgroundVideo);
-
 /* ---------- Detail Features Scroll Indicator ---------- */
 document.querySelectorAll('.detail-features').forEach(features => {
     features.addEventListener('scroll', function() {
@@ -3957,6 +3912,16 @@ document.querySelectorAll('.detail-features').forEach(features => {
         } else {
             this.classList.remove('scrolled');
         }
+    });
+});
+
+/* Force video autoplay on iOS */
+document.addEventListener('DOMContentLoaded', function() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        video.play().catch(function(error) {
+            console.log("Video autoplay failed:", error);
+        });
     });
 });
 </script>
