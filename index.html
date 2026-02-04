@@ -457,9 +457,6 @@ body.scroll-locked {
 }
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-    html {
-        scroll-snap-type: y proximity;
-    }
     /* ===== LANDING PAGE ===== */
     
     .navbar {
@@ -1084,6 +1081,8 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
+        scroll-snap-align: none;
+        scroll-snap-stop: normal;
         height: 100svh;
         min-height: 100svh;
         overflow: hidden;
