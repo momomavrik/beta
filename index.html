@@ -20,7 +20,6 @@ html {
     scroll-behavior: smooth;
     overscroll-behavior: none;
     background: #212121;
-    -webkit-overflow-scrolling: touch;
 }
 
 body {
@@ -30,35 +29,12 @@ body {
     overscroll-behavior: none;
 }
 
-/* ---------- HIDE SCROLLBARS GLOBALLY ---------- */
-* {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE and Edge */
-}
-
-*::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
-    width: 0;
-    height: 0;
-    background: transparent;
-}
-
 /* ---------- GLOBAL ---------- */
 section {
     height: 100vh;
     width: 100%;
     scroll-snap-align: start;
     position: relative;
-}
-
-/* ---------- ARROW TEXT STYLING (prevent emoji) ---------- */
-.arrow-icon {
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 /* ---------- LANDING ---------- */
@@ -75,29 +51,6 @@ section {
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    /* Performance optimizations for iOS */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    will-change: auto;
-}
-
-/* iOS-specific video optimizations */
-@supports (-webkit-touch-callout: none) {
-    .bg-video {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 30% center; /* Adjust this: 0% = left edge, 50% = center, 100% = right edge */
-    }
-    
-    #landing {
-        overflow: hidden;
-    }
 }
 
 .bg-overlay {
@@ -502,7 +455,6 @@ body.scroll-locked {
     touch-action: none;
     overscroll-behavior: none;
 }
-
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
     
@@ -562,19 +514,6 @@ body.scroll-locked {
     .bottom-left-text,
     .bottom-right {
         font-size: 9px;
-    }
-    
-    /* ===== iOS Video Fix ===== */
-    @supports (-webkit-touch-callout: none) {
-        #landing .bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: 30% center; /* 30% shifts video left, adjust as needed */
-        }
     }
     
     /* ===== SOLUTIONS PAGE (SECOND) - FIXED ===== */
@@ -698,7 +637,7 @@ body.scroll-locked {
         max-height: 250px;
         position: relative;
         flex-shrink: 0;
-        overflow: hidden;
+        overflow: hidden; /* Important for video zoom/crop */
     }
     
     /* Video positioning fixes for each detail page */
@@ -777,27 +716,16 @@ body.scroll-locked {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         position: relative;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-    
-    .detail-features::-webkit-scrollbar {
-        display: none;
-        width: 0;
-        height: 0;
     }
     
     /* Scroll indicator arrow - right side, fades on scroll */
     .detail-features::after {
-        content: '';
+        content: '↓';
         position: absolute;
         bottom: 8px;
         right: 0;
-        width: 12px;
-        height: 12px;
-        border-right: 2px solid rgba(0, 0, 0, 0.5);
-        border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-        transform: rotate(45deg);
+        font-size: 14px;
+        opacity: 0.5;
         animation: scrollBounce 1.5s ease-in-out infinite;
         pointer-events: none;
         transition: opacity 0.3s ease;
@@ -810,8 +738,8 @@ body.scroll-locked {
     }
     
     @keyframes scrollBounce {
-        0%, 100% { transform: rotate(45deg) translateY(0); }
-        50% { transform: rotate(45deg) translateY(4px); }
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(4px); }
     }
     
     .detail-feature {
@@ -1068,14 +996,6 @@ body.scroll-locked {
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
         min-height: 0;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-    }
-    
-    .cards-scroll-container::-webkit-scrollbar {
-        display: none;
-        width: 0;
-        height: 0;
     }
     
     .cards-wrapper {
@@ -1153,11 +1073,11 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        height: 100svh;
+        height: auto;
         min-height: 100vh;
         min-height: 100dvh;
         max-height: none;
-        overflow: auto;
+        overflow: visible;
         scroll-snap-align: start;
         background: #171717;
         -webkit-overflow-scrolling: touch;
@@ -1294,35 +1214,38 @@ body.scroll-locked {
         max-width: 300px;
     }
     
-    /* Footer all on one line */
+   /* Footer all on one line */
     .contact-footer {
         flex-direction: row;
         flex-wrap: nowrap;
         align-items: center;
         justify-content: flex-start;
-        gap: 8px;
-        font-size: 8px;
+        gap: 4px;
+        font-size: 6px;
         margin-top: 10px;
         white-space: nowrap;
+        letter-spacing: 0;
     }
-    
+
     .contact-copyright {
         text-align: left;
+        letter-spacing: 0;
     }
-    
+
     /* Hide "All rights reserved" on mobile */
     .hide-mobile {
         display: none;
     }
-    
+
     .contact-footer-link {
         text-align: left;
+        letter-spacing: 0;
     }
-    
+
     /* Add separator dots between footer items */
     .contact-footer-link::before {
         content: "•";
-        margin-right: 8px;
+        margin-right: 4px;
         opacity: 0.5;
     }
 }
@@ -1361,10 +1284,10 @@ body.scroll-locked {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-start;  /* Changed from center */
     text-align: center;
     gap: 48px;
-    padding-top: 18px;
+    padding-top: 18px;  /* Add some top padding */
 }
 
 .team-description {
@@ -1443,8 +1366,6 @@ body.scroll-locked {
     cursor: pointer;
     transition: opacity 0.3s ease;
     z-index: 10;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
 }
 
 .team-nav:hover {
@@ -1635,8 +1556,6 @@ body.scroll-locked {
     align-items: center;
     gap: 8px;
     transition: opacity 0.3s ease;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
 }
 
 .detail-nav:hover {
@@ -1661,8 +1580,6 @@ body.scroll-locked {
     font-size: 24px;
     cursor: pointer;
     transition: opacity 0.3s ease;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
 }
 
 .detail-close:hover {
@@ -1725,9 +1642,16 @@ body.scroll-locked {
 
 .detail-divider {
     width: 100%;
+    min-height: 1px;
     height: 1px;
     background: rgba(0, 0, 0, 0.3);
     margin-bottom: 32px;
+}
+
+#detail-chorus .detail-divider {
+    min-height: 1px;
+    height: 1px;
+    display: block;
 }
 
 .detail-features {
@@ -1847,7 +1771,6 @@ body.scroll-locked {
     letter-spacing: 0.1em;
     cursor: pointer;
     transition: background 0.3s ease, border-color 0.3s ease;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
 }
 
 .slick-sheet-btn:hover {
@@ -1961,14 +1884,6 @@ body.scroll-locked {
     overflow-x: scroll;
     overflow-y: hidden;
     padding-bottom: 8px;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.cards-scroll-container::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
 }
 
 .cards-wrapper {
@@ -2118,8 +2033,6 @@ body.scroll-locked {
     transition: all 0.3s ease;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
     z-index: 2;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
 }
 
 .article-card:hover .card-arrow {
@@ -2218,8 +2131,6 @@ body.scroll-locked {
 
 .our-articles-btn span {
     transition: transform 0.3s ease;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
 }
 
 .our-articles-btn:hover span {
@@ -2340,8 +2251,6 @@ body.scroll-locked {
     cursor: pointer;
     color: #000;
     transition: opacity 0.3s ease;
-    font-family: 'Clash Display', Arial, Helvetica, sans-serif;
-    font-style: normal;
 }
 
 .contact-top-arrow:hover {
@@ -2501,7 +2410,7 @@ body.scroll-locked {
 .contact-footer {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 48px;
     font-size: 13px;
     opacity: 0.7;
 }
@@ -2526,10 +2435,11 @@ body.scroll-locked {
 </head>
 
 <body>
+
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
+    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline >
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -2639,23 +2549,9 @@ body.scroll-locked {
             <video class="detail-video" autoplay muted loop playsinline>
                 <source src="hatchet.mp4" type="video/mp4">
             </video>
-            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 3L8 13M8 13L3 8M8 13L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('teaming')">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 7H3M3 7L7 3M3 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                TEAMING
-            </div>
-            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('dart')">
-                DART
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">↓</div>
+            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('teaming')">← TEAMING</div>
+            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('dart')">DART →</div>
         </div>
         <div class="detail-bottom">
             <div class="detail-left">
@@ -2692,12 +2588,7 @@ body.scroll-locked {
                     <img src="hatchet-wireframe.png" alt="Hatchet Wireframe">
                 </div>
                 <img src="hatchet-stats.png" class="detail-stats detail-anim detail-anim-right" alt="Hatchet Stats">
-                <button class="slick-sheet-btn detail-anim detail-anim-right">
-                    SLICK SHEET
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline; vertical-align: middle; margin-left: 6px;">
-                        <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+                <button class="slick-sheet-btn detail-anim detail-anim-right">SLICK SHEET ↗</button>
             </div>
         </div>
     </div>
@@ -2708,23 +2599,9 @@ body.scroll-locked {
             <video class="detail-video" autoplay muted loop playsinline>
                 <source src="dart.mp4" type="video/mp4">
             </video>
-            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 3L8 13M8 13L3 8M8 13L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('hatchet')">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 7H3M3 7L7 3M3 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                HATCHET
-            </div>
-            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('chorus')">
-                CHORUS
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">↓</div>
+            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('hatchet')">← HATCHET</div>
+            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('chorus')">CHORUS →</div>
         </div>
         <div class="detail-bottom">
             <div class="detail-left">
@@ -2734,19 +2611,19 @@ body.scroll-locked {
                     <span class="detail-subtitle detail-anim detail-anim-type-sub" data-text="/// HIGH VELOCITY|INTERCEPTOR"></span>
                 </div>
                 <div class="detail-divider detail-anim detail-anim-content"></div>
-                <div class="detail-features detail-anim detail-anim-content">
-                    <div class="detail-feature">
-                        <div class="feature-title">Performance</div>
-                        <div class="feature-text">DART exceeds 250 mph to pursue fast targets, strikes UAS at high altitude, and evades CUAS defenses.</div>
-                    </div>
-                    <div class="detail-feature">
-                        <div class="feature-title">Active</div>
-                        <div class="feature-text">DART carries explosive payload or shotgun array (per configuration) for reliable effect without requiring ultra-close intercept.</div>
-                    </div>
-                    <div class="detail-feature">
-                        <div class="feature-title">Attritable</div>
-                        <div class="feature-text">DART uses mostly plastic airframe and simple skeleton, combining basic optical sensing with networked targeting data instead of complex seekers.</div>
-                    </div>
+                        <div class="detail-features detail-anim detail-anim-content">
+                            <div class="detail-feature">
+                                <div class="feature-title">Performance</div>
+                                <div class="feature-text">DART exceeds 250 mph to pursue fast targets, strikes UAS at high altitude, and evades CUAS defenses.</div>
+                            </div>
+                            <div class="detail-feature">
+                                <div class="feature-title">Active</div>
+                                <div class="feature-text">DART carries explosive payload or shotgun array (per configuration) for reliable effect without requiring ultra-close intercept.</div>
+                            </div>
+                            <div class="detail-feature">
+                                <div class="feature-title">Attritable</div>
+                                <div class="feature-text">DART uses mostly plastic airframe and simple skeleton, combining basic optical sensing with networked targeting data instead of complex seekers.</div>
+                            </div>
                 </div>
                 <div class="detail-footer detail-anim detail-anim-content">
                     <span>MAVRIK INC **</span>
@@ -2759,12 +2636,7 @@ body.scroll-locked {
                     <img src="dart-wireframe.png" alt="Dart Wireframe">
                 </div>
                 <img src="dart-stats.png" class="detail-stats detail-anim detail-anim-right" alt="Dart Stats">
-                <button class="slick-sheet-btn detail-anim detail-anim-right">
-                    SLICK SHEET
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline; vertical-align: middle; margin-left: 6px;">
-                        <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+                <button class="slick-sheet-btn detail-anim detail-anim-right">SLICK SHEET ↗</button>
             </div>
         </div>
     </div>
@@ -2775,23 +2647,9 @@ body.scroll-locked {
             <video class="detail-video" autoplay muted loop playsinline>
                 <source src="chorus.mp4" type="video/mp4">
             </video>
-            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 3L8 13M8 13L3 8M8 13L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('dart')">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 7H3M3 7L7 3M3 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                DART
-            </div>
-            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('teaming')">
-                TEAMING
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">↓</div>
+            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('dart')">← DART</div>
+            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('teaming')">TEAMING →</div>
         </div>
         <div class="detail-bottom">
             <div class="detail-left">
@@ -2828,12 +2686,7 @@ body.scroll-locked {
                     <img src="chorus-wireframe.png" alt="Chorus Wireframe">
                 </div>
                 <img src="chorus-stats.png" class="detail-stats detail-anim detail-anim-right" alt="Chorus Stats">
-                <button class="slick-sheet-btn detail-anim detail-anim-right">
-                    SLICK SHEET
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline; vertical-align: middle; margin-left: 6px;">
-                        <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
+                <button class="slick-sheet-btn detail-anim detail-anim-right">SLICK SHEET ↗</button>
             </div>
         </div>
     </div>
@@ -2844,23 +2697,9 @@ body.scroll-locked {
             <video class="detail-video" autoplay muted loop playsinline>
                 <source src="manifest.mp4" type="video/mp4">
             </video>
-            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M8 3L8 13M8 13L3 8M8 13L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
-            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('chorus')">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M11 7H3M3 7L7 3M3 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                CHORUS
-            </div>
-            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('hatchet')">
-                HATCHET
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </div>
+            <div class="detail-close detail-anim detail-anim-nav" onclick="closeDetail()">↓</div>
+            <div class="detail-nav detail-nav-left detail-anim detail-anim-nav" onclick="switchDetail('chorus')">← CHORUS</div>
+            <div class="detail-nav detail-nav-right detail-anim detail-anim-nav" onclick="switchDetail('hatchet')">HATCHET →</div>
         </div>
         <div class="detail-bottom">
             <div class="detail-left">
@@ -2903,22 +2742,13 @@ body.scroll-locked {
 
         <div class="team-cta">
             <p class="team-cta-text">If you want to help protect our country and love technology</p>
-            <span class="apply-link" onclick="window.location.href='#'">
-                APPLY NOW
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: inline; vertical-align: middle; margin-left: 4px;">
-                    <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-            </span>
+            <span class="apply-link" onclick="window.location.href='#'">APPLY NOW ↗</span>
         </div>
     </div>
 
     <!-- Team members -->
     <div class="team-members fade-in">
-        <span class="team-nav team-nav-left" onclick="switchTeamPage(-1)">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M11 7H3M3 7L7 3M3 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
+        <span class="team-nav team-nav-left" onclick="switchTeamPage(-1)">←</span>
         
         <div class="team-carousel">
             <!-- Page 1 -->
@@ -3008,11 +2838,7 @@ body.scroll-locked {
             </div>
         </div>
 
-        <span class="team-nav team-nav-right" onclick="switchTeamPage(1)">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
+        <span class="team-nav team-nav-right" onclick="switchTeamPage(1)">→</span>
     </div>
 
 </section>
@@ -3048,11 +2874,7 @@ body.scroll-locked {
                             </div>
                         </div>
                     </div>
-                    <div class="card-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="card-arrow">↗</div>
                 </div>
                 
                 <!-- Card 2: Contested Logistics -->
@@ -3073,11 +2895,7 @@ body.scroll-locked {
                             </div>
                         </div>
                     </div>
-                    <div class="card-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="card-arrow">↗</div>
                 </div>
                 
                 <!-- Card 3: Battlefield Logistics -->
@@ -3098,11 +2916,7 @@ body.scroll-locked {
                             </div>
                         </div>
                     </div>
-                    <div class="card-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="card-arrow">↗</div>
                 </div>
                 
                 <!-- Card 4: Optionally Piloted Helicopters -->
@@ -3123,11 +2937,7 @@ body.scroll-locked {
                             </div>
                         </div>
                     </div>
-                    <div class="card-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="card-arrow">↗</div>
                 </div>
                 
                 <!-- Card 5: Heavy Lift Helicopter Teams -->
@@ -3148,11 +2958,7 @@ body.scroll-locked {
                             </div>
                         </div>
                     </div>
-                    <div class="card-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </div>
+                    <div class="card-arrow">↗</div>
                 </div>
                 
             </div>
@@ -3168,11 +2974,7 @@ body.scroll-locked {
 
     <button class="our-articles-btn" onclick="window.open('#', '_blank')">
         OUR ARTICLES
-        <span>
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M4 10L10 4M10 4H5M10 4V9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>
+        <span>↗</span>
     </button>
 </section>
 
@@ -3189,11 +2991,7 @@ body.scroll-locked {
                 </div>
             </div>
             <div class="contact-header-right">
-                <div class="contact-top-arrow" onclick="document.getElementById('landing').scrollIntoView({ behavior: 'smooth' })">
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 16V4M10 4L4 10M10 4L16 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
+                <div class="contact-top-arrow" onclick="document.getElementById('landing').scrollIntoView({ behavior: 'smooth' })">↑</div>
                 <span class="return-home">Return to Home</span>
             </div>
         </div>
@@ -3904,6 +3702,15 @@ document.querySelectorAll('#news .article-card').forEach(card => {
     });
 });
 
+/* Force video autoplay on iOS */
+document.addEventListener('DOMContentLoaded', function() {
+    const videos = document.querySelectorAll('video');
+    videos.forEach(video => {
+        video.play().catch(function(error) {
+            console.log("Video autoplay failed:", error);
+        });
+    });
+});
 /* ---------- Detail Features Scroll Indicator ---------- */
 document.querySelectorAll('.detail-features').forEach(features => {
     features.addEventListener('scroll', function() {
