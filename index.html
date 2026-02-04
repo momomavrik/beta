@@ -457,6 +457,7 @@ body.scroll-locked {
 }
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
+    
     /* ===== LANDING PAGE ===== */
     
     .navbar {
@@ -707,7 +708,6 @@ body.scroll-locked {
         flex-shrink: 0;
     }
     
-    /* FIXED: Hide scrollbar in detail features while keeping scroll */
     .detail-features {
         flex-direction: column;
         gap: 12px;
@@ -716,14 +716,6 @@ body.scroll-locked {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         position: relative;
-        /* Hide scrollbar for Chrome, Safari and Opera */
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-    }
-    
-    /* Hide scrollbar for Chrome, Safari and Opera */
-    .detail-features::-webkit-scrollbar {
-        display: none;
     }
     
     /* Scroll indicator arrow - right side, fades on scroll */
@@ -1081,15 +1073,15 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        scroll-snap-align: none;
-        scroll-snap-stop: normal;
-        height: 100svh;
-        min-height: 100svh;
-        overflow: hidden;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
+        overflow: visible;
+        scroll-snap-align: start;
         background: #171717;
+        -webkit-overflow-scrolling: touch;
         position: relative;
-        display: flex;
-        flex-direction: column;
     }
     
     .contact-header {
@@ -1143,14 +1135,12 @@ body.scroll-locked {
     .contact-main {
         flex: 1;
         padding: 40px 20px 30px;
-        min-height: 0;
+        min-height: auto;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         background: #171717;
-        /* Safe area padding for iOS */
         padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
-        overflow: hidden;
     }
     
     .contact-bg-eagle {
@@ -1224,22 +1214,22 @@ body.scroll-locked {
         max-width: 300px;
     }
     
-    /* FIXED: Footer copyright fully visible */
+   /* Footer all on one line */
     .contact-footer {
         flex-direction: row;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         align-items: center;
         justify-content: flex-start;
-        gap: 4px 8px;
-        font-size: 9px;
+        gap: 4px;
+        font-size: 6px;
         margin-top: 10px;
-        letter-spacing: 0.02em;
-        line-height: 1.4;
+        white-space: nowrap;
+        letter-spacing: 0;
     }
 
     .contact-copyright {
         text-align: left;
-        letter-spacing: 0.02em;
+        letter-spacing: 0;
     }
 
     /* Hide "All rights reserved" on mobile */
@@ -1249,7 +1239,7 @@ body.scroll-locked {
 
     .contact-footer-link {
         text-align: left;
-        letter-spacing: 0.02em;
+        letter-spacing: 0;
     }
 
     /* Add separator dots between footer items */
@@ -3731,6 +3721,43 @@ document.querySelectorAll('.detail-features').forEach(features => {
         }
     });
 });
+/* ---------- iOS Safari Footer Snap Fix ---------- */
+(function() {
+    if (window.innerWidth > 768) return; // Only on mobile
+    
+    const html = document.documentElement;
+    const contact = document.getElementById('contact');
+    
+    let snapTimeout;
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                // Disable snap when contact is visible
+                html.style.scrollSnapType = 'none';
+                
+                // Re-enable after user has settled (prevents jump)
+                clearTimeout(snapTimeout);
+                snapTimeout = setTimeout(() => {
+                    // Only re-enable if user scrolls away
+                }, 1500);
+            }
+        });
+    }, { threshold: [0.5] });
+    
+    // Re-enable snap when scrolling to other sections
+    const otherSections = document.querySelectorAll('section:not(#contact)');
+    const otherObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                html.style.scrollSnapType = 'y mandatory';
+            }
+        });
+    }, { threshold: [0.5] });
+    
+    observer.observe(contact);
+    otherSections.forEach(s => otherObserver.observe(s));
+})();
 </script>
 
 </body>
