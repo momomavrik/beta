@@ -1082,15 +1082,18 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        /* Use small viewport height to account for browser UI */
+        /* Disable scroll snapping for this section on mobile */
         scroll-snap-align: none;
-        height: 100svh;
-        min-height: 100svh;
-        max-height: 100svh;
-        overflow: hidden;
-        scroll-snap-align: start;
+        /* Use -webkit-fill-available as primary, with fallbacks */
+        height: 100%;
+        height: -webkit-fill-available;
+        min-height: 100%;
+        min-height: -webkit-fill-available;
+        /* Prevent any height changes from causing reflow */
+        max-height: none;
+        overflow: visible;
+        overflow: clip;
         background: #171717;
-        -webkit-overflow-scrolling: touch;
         position: relative;
         display: flex;
         flex-direction: column;
