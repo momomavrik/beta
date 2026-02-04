@@ -1151,15 +1151,18 @@ body.scroll-locked {
     }
     
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
-        
+    
     #contact {
         height: auto;
-        min-height: 100svh;
-        scroll-snap-align: end;  /* KEY CHANGE: snap to bottom edge instead of top */
-        scroll-snap-stop: always;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
+        overflow: visible;
+        scroll-snap-align: start;
         background: #171717;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
     }
- 
     
     .contact-header {
         padding: 20px;
