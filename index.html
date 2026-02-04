@@ -86,13 +86,13 @@ section {
 /* iOS-specific video optimizations */
 @supports (-webkit-touch-callout: none) {
     .bg-video {
-        position: fixed;
+        position: absolute;
         top: 0;
         left: 0;
-        min-width: 100%;
-        min-height: 100%;
-        width: auto;
-        height: auto;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 30% center; /* Adjust this: 0% = left edge, 50% = center, 100% = right edge */
     }
     
     #landing {
@@ -568,14 +568,12 @@ body.scroll-locked {
     @supports (-webkit-touch-callout: none) {
         #landing .bg-video {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            min-width: 100%;
-            min-height: 100%;
-            width: auto;
-            height: auto;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             object-fit: cover;
+            object-position: 30% center; /* 30% shifts video left, adjust as needed */
         }
     }
     
