@@ -1695,6 +1695,8 @@ body.scroll-locked {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .detail-left .eagle {
@@ -1725,15 +1727,19 @@ body.scroll-locked {
 
 .detail-divider {
     width: 100%;
+    min-width: 100%;
     height: 1px;
     background: rgba(0, 0, 0, 0.3);
     margin-bottom: 32px;
+    flex-shrink: 0;
 }
 
 .detail-features {
     display: flex;
     gap: 40px;
     flex: 1;
+    min-height: 0;
+    overflow-y: auto;
 }
 
 .detail-feature {
@@ -1747,7 +1753,7 @@ body.scroll-locked {
 }
 
 .feature-text {
-    font-size: 14px;
+    font-size: 12px;
     line-height: 1.5;
     opacity: 0.85;
 }
