@@ -75,6 +75,12 @@ section {
     height: 100%;
     object-fit: cover;
     z-index: 0;
+    /* Performance optimizations for iOS */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: auto;
 }
 
 @keyframes scrollBounce {
@@ -637,7 +643,6 @@ body.scroll-locked {
     .bottom-right {
         font-size: 9px;
     }
-
     
     /* ===== SOLUTIONS PAGE (SECOND) - FIXED ===== */
     
