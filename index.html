@@ -507,7 +507,14 @@ body.scroll-locked {
 @media (max-width: 768px) {
     
     /* ===== LANDING PAGE ===== */
-    
+    html {
+        scroll-snap-type: none !important;
+    }
+
+    section {
+        scroll-snap-align: none !important;
+    }
+        
     .navbar {
         height: 70px;
     }
@@ -582,9 +589,9 @@ body.scroll-locked {
     #second {
         padding: 16px 16px 12px;
         height: 100vh;
-        height: 100dvh;
-        overflow: hidden;
+        max-height: 100vh;
         gap: 12px;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
     }
@@ -1153,25 +1160,15 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        height: 100vh;
-        height: 100dvh;
-        overflow: hidden;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
+        overflow: visible;
         scroll-snap-align: start;
         background: #171717;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .contact-main {
-        flex: 1;
-        padding: 40px 20px 30px;
-        overflow-y: auto;
         -webkit-overflow-scrolling: touch;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        background: #171717;
+        position: relative;
     }
     
     .contact-header {
@@ -3940,31 +3937,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-/* ---------- iOS Scroll Snap Fix ---------- */
-if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-    let ticking = false;
-    
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                // Force Safari to recalculate snap points
-                document.documentElement.style.scrollSnapType = 'none';
-                setTimeout(() => {
-                    document.documentElement.style.scrollSnapType = 'y mandatory';
-                }, 1);
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-    
-    // Also fix on orientation change
-    window.addEventListener('orientationchange', () => {
-        setTimeout(() => {
-            window.scrollTo(0, window.scrollY);
-        }, 100);
-    });
-}
 </script>
 
 </body>
