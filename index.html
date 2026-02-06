@@ -2604,7 +2604,7 @@ body.scroll-locked {
 <section id="landing">
 
     <video class="bg-video" autoplay muted loop playsinline>
-        <source src="bg.mp4" type="video/mp4">
+        <source src="hatchet.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
 
@@ -4170,33 +4170,6 @@ function checkOverflow() {
 
 window.addEventListener('resize', checkOverflow);
 setInterval(checkOverflow, 500); // Check every 500ms
-
-/* ---------- iOS Video Performance Fix ---------- */
-document.addEventListener('DOMContentLoaded', function() {
-    const landingVideo = document.querySelector('#landing .bg-video');
-    
-    if (landingVideo) {
-        // Force video to load and play on iOS
-        landingVideo.load();
-        
-        // Attempt to play after a short delay
-        setTimeout(() => {
-            landingVideo.play().catch(err => {
-                console.log('Autoplay prevented:', err);
-            });
-        }, 100);
-        
-        // Reduce playback rate slightly for smoother performance on iOS
-        landingVideo.playbackRate = 0.95;
-        
-        // Handle iOS low power mode
-        landingVideo.addEventListener('suspend', function() {
-            setTimeout(() => {
-                landingVideo.play();
-            }, 500);
-        });
-    }
-});
 </script>
 
 </body>
