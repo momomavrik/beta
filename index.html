@@ -646,14 +646,8 @@ body.scroll-locked {
     
     /* ===== iOS Video Fix ===== */
     @supports (-webkit-touch-callout: none) {
-        #landing .bg-video {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: 30% center; /* 30% shifts video left, adjust as needed */
+        .bg-video {
+            object-position: 30% center;
         }
     }
     }
@@ -2617,7 +2611,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
+    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="none" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
