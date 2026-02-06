@@ -581,10 +581,8 @@ body.scroll-locked {
     
     #second {
         padding: 16px 16px 12px;
-        height: 100vh;
-        height: 100dvh;
-        max-height: 100vh;
-        max-height: 100dvh;
+        min-height: 100vh;
+        min-height: 100dvh;
         gap: 12px;
         overflow: hidden;
         display: flex;
@@ -1155,11 +1153,10 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        height: 100vh;
-        height: 100dvh;
-        max-height: 100vh;
-        max-height: 100dvh;
-        overflow: hidden;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         scroll-snap-align: start;
         background: #171717;
         -webkit-overflow-scrolling: touch;
