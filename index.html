@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>MAVRIK</title>
 
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet">
@@ -21,6 +21,9 @@ html {
     overscroll-behavior: none;
     background: #212121;
     -webkit-overflow-scrolling: touch;
+    /* Add safe area support */
+    padding-top: constant(safe-area-inset-top); /* iOS 11.0-11.2 fallback */
+    padding-top: env(safe-area-inset-top);
 }
 
 body {
@@ -506,6 +509,14 @@ body.scroll-locked {
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
     
+    section {
+        height: 100vh;
+        height: 100dvh;
+        width: 100%;
+        scroll-snap-align: start;
+        position: relative;
+        scroll-snap-stop: always;
+    }
     /* ===== LANDING PAGE ===== */
     
     .navbar {
@@ -1153,15 +1164,17 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        height: auto;
-        min-height: 100vh;
-        min-height: 100dvh;
-        max-height: none;
-        overflow: visible;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100dvh;
+        overflow: hidden;
         scroll-snap-align: start;
         background: #171717;
         -webkit-overflow-scrolling: touch;
         position: relative;
+        /* Add safe area padding */
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
     }
     
     .contact-header {
@@ -1220,7 +1233,7 @@ body.scroll-locked {
         flex-direction: column;
         justify-content: flex-start;
         background: #171717;
-        padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+        padding-bottom: max(30px, env(safe-area-inset-bottom));
     }
     
     .contact-bg-eagle {
