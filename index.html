@@ -505,19 +505,16 @@ body.scroll-locked {
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-
+    html {
+        scroll-snap-type: none !important;
+    }
 
     section {
-        height: auto !important;
-        min-height: 100svh !important;
+        scroll-snap-align: none !important;
     }
     
-    #landing {
-        height: 100svh;
-        min-height: 100svh;
-        max-height: 100svh;
-    }
-        
+    /* ===== LANDING PAGE ===== */
+    
     .navbar {
         height: 70px;
     }
@@ -591,9 +588,10 @@ body.scroll-locked {
     
     #second {
         padding: 16px 16px 12px;
-        height: auto;
-        min-height: 100svh;
+        height: 100vh;
+        max-height: 100vh;
         gap: 12px;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
     }
@@ -657,6 +655,7 @@ body.scroll-locked {
         gap: 10px;
         flex: 1;
         min-height: 0;
+        overflow: hidden;
     }
     
     .tile {
@@ -695,7 +694,7 @@ body.scroll-locked {
         right: 0;
         bottom: 0;
         height: 100%;
-        height: 100svh;
+        height: 100dvh;
         display: flex;
         flex-direction: column;
     }
@@ -902,8 +901,10 @@ body.scroll-locked {
     
     #team {
         padding: 50px 20px 30px;
-        height: auto;
-        min-height: 100svh;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
     }
@@ -1030,8 +1031,10 @@ body.scroll-locked {
     
     #news {
         padding: 16px;
-        height: auto;
-        min-height: 100svh;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
     }
@@ -1158,7 +1161,9 @@ body.scroll-locked {
     
     #contact {
         height: auto;
-        min-height: 100svh;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
         overflow: visible;
         scroll-snap-align: start;
         background: #171717;
