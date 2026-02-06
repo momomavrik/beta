@@ -97,11 +97,16 @@ section {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: 30% center; /* Adjust this: 0% = left edge, 50% = center, 100% = right edge */
+        object-position: 30% center;
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        will-change: transform;
     }
     
     #landing {
         overflow: hidden;
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
     }
 }
 
@@ -2633,7 +2638,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline preload="auto">
+    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="metadata" poster="">
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -3970,13 +3975,13 @@ function initMobileTeam() {
 function switchTeamPage(direction) {
     if (window.innerWidth <= 768) {
         const mobileMembers = Array.from(allMembers).slice(0, 10);
-        allMembers[currentMemberIndex].classList.remove('mobile-active');
+        mobileMembers[currentMemberIndex].classList.remove('mobile-active');
         
         currentMemberIndex += direction;
         if (currentMemberIndex < 0) currentMemberIndex = allMembers.length - 1;
         if (currentMemberIndex >= allMembers.length) currentMemberIndex = 0;
         
-        allMembers[currentMemberIndex].classList.add('mobile-active');
+        mobileMembers[currentMemberIndex].classList.add('mobile-active');
         
         // Also switch to correct page
         const pages = document.querySelectorAll('.team-page');
