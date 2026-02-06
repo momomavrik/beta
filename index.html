@@ -61,12 +61,10 @@ section {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* ---------- LANDING ---------- */
 #landing {
     background: #1a1a1a;
     position: relative;
-    /* ADD THIS LINE: */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
 }
 
 .bg-video {
@@ -77,12 +75,9 @@ section {
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    /* ADD THESE LINES: */
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-    will-change: transform;
-    /* REMOVE THIS LINE: */
-    /* will-change: auto; */
+    filter: brightness(0.65);  /* Replaces the overlay darkening */
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 @keyframes scrollBounce {
@@ -98,9 +93,6 @@ section {
     height: 100%;
     background: rgba(0, 0, 0, 0.35);
     z-index: 1;
-    /* ADD THIS LINE: */
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
 }
 
 /* Eagle */
@@ -2611,7 +2603,6 @@ body.scroll-locked {
     <video class="bg-video" autoplay muted loop playsinline>
         <source src="bg.mp4" type="video/mp4">
     </video>
-    <div class="bg-overlay"></div>
 
     <!-- Navigation Bar -->
     <nav class="navbar">
