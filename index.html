@@ -68,19 +68,13 @@ section {
 }
 
 .bg-video {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    /* Performance optimizations for iOS */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    will-change: auto;
 }
 
 @keyframes scrollBounce {
@@ -2611,7 +2605,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="none" poster="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+    <video class="bg-video" autoplay muted loop playsinline>
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
