@@ -582,10 +582,9 @@ body.scroll-locked {
     #second {
         padding: 16px 16px 12px;
         height: 100vh;
-        height: 100svh;
-        max-height: 100vh;
-        gap: 12px;
+        height: 100dvh;
         overflow: hidden;
+        gap: 12px;
         display: flex;
         flex-direction: column;
     }
@@ -1155,15 +1154,24 @@ body.scroll-locked {
     
     #contact {
         height: 100vh;
-        height: 100svh;
-        min-height: 100vh;
-        min-height: 100dvh;
-        max-height: none;
-        overflow: visible;
+        height: 100dvh;
+        overflow: hidden;
         scroll-snap-align: start;
         background: #171717;
-        -webkit-overflow-scrolling: touch;
         position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contact-main {
+        flex: 1;
+        padding: 40px 20px 30px;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background: #171717;
     }
     
     .contact-header {
@@ -3932,8 +3940,31 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
-
-
+/* ---------- iOS Scroll Snap Fix ---------- */
+if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    let ticking = false;
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                // Force Safari to recalculate snap points
+                document.documentElement.style.scrollSnapType = 'none';
+                setTimeout(() => {
+                    document.documentElement.style.scrollSnapType = 'y mandatory';
+                }, 1);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    
+    // Also fix on orientation change
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            window.scrollTo(0, window.scrollY);
+        }, 100);
+    });
+}
 </script>
 
 </body>
