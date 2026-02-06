@@ -83,6 +83,11 @@ section {
     will-change: auto;
 }
 
+@keyframes scrollBounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); }
+    50% { transform: rotate(45deg) translateY(4px); }
+}
+
 /* iOS-specific video optimizations */
 @supports (-webkit-touch-callout: none) {
     .bg-video {
@@ -503,6 +508,90 @@ body.scroll-locked {
     overscroll-behavior: none;
 }
 
+/* Hide logo text during tablet transition */
+@media (max-width: 850px) and (min-width: 769px) {
+    .right-copy {
+        display: none;
+    }
+}
+
+/* ---------- TABLET / MEDIUM SCREENS ---------- */
+@media (max-width: 1350px) and (min-width: 769px) {
+    /* Hide desktop pages */
+    .team-page[data-page="0"],
+    .team-page[data-page="1"] {
+        display: none !important;
+    }
+    
+    /* Show tablet pages with proper styling */
+    .team-page[data-page="2"],
+    .team-page[data-page="3"],
+    .team-page[data-page="4"],
+    .team-page[data-page="5"] {
+        gap: 32px;
+    }
+    
+    .team-page[data-page="2"].active,
+    .team-page[data-page="3"].active,
+    .team-page[data-page="4"].active,
+    .team-page[data-page="5"].active {
+        display: flex !important;
+    }
+        /* Hide stats image on tablet */
+    .detail-stats {
+        display: none !important;
+    }
+    
+    /* Hide subtitle text on tablet */
+    .detail-subtitle {
+        display: none !important;
+    }
+    
+    /* Adjust header spacing without subtitle */
+    .detail-header {
+        margin-bottom: 12px;
+    }
+    
+    /* Make detail-features scrollable with indicator */
+    .detail-features {
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+    
+    .detail-features::-webkit-scrollbar {
+        display: none;
+        width: 0;
+        height: 0;
+    }
+    
+    .detail-features::after {
+        content: '';
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 14px;
+        height: 14px;
+        border-right: 2px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+        transform: rotate(45deg);
+        animation: scrollBounce 1.5s ease-in-out infinite;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 10;
+        opacity: 0;
+    }
+
+    .detail-features.has-overflow::after {
+        opacity: 1;
+    }
+
+    .detail-features.scrolled::after {
+        opacity: 0;
+    }
+}
+
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
     
@@ -515,7 +604,6 @@ body.scroll-locked {
     section {
         scroll-snap-align: none !important;
     }
-    
     .navbar {
         height: 70px;
     }
@@ -815,11 +903,6 @@ body.scroll-locked {
     /* Hide arrow when scrolled - applied via JS */
     .detail-features.scrolled::after {
         opacity: 0;
-    }
-    
-    @keyframes scrollBounce {
-        0%, 100% { transform: rotate(45deg) translateY(0); }
-        50% { transform: rotate(45deg) translateY(4px); }
     }
     
     .detail-feature {
@@ -1566,6 +1649,7 @@ body.scroll-locked {
     z-index: 0;
 }
 
+
 #detail-dart .detail-video {
     object-position: center 15%;
 }
@@ -1748,6 +1832,7 @@ body.scroll-locked {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    margin-bottom: 16px;
 }
 
 .detail-feature {
@@ -1777,6 +1862,8 @@ body.scroll-locked {
     letter-spacing: 0.14em;
     opacity: 0.6;
     margin-top: auto;
+    margin-top: 16px; /* Increase from auto to ensure minimum spacing */
+    padding-top: 16px; /* Increase padding */
 }
 
 .detail-right {
@@ -2935,90 +3022,181 @@ body.scroll-locked {
         </span>
         
         <div class="team-carousel">
-            <!-- Page 1 -->
-            <div class="team-page active" data-page="0">
-                <div onclick="window.open('https://www.linkedin.com/in/rishi-mannava-10a045223/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="rishi.png" alt="Rishi Mannava" class="member-image">
-                    </div>
-                    <span class="member-name">RISHI MANNAVA</span>
-                    <span class="member-subtitle">COO</span>
+        <!-- Desktop Page 1 / Tablet hidden -->
+        <div class="team-page active" data-page="0">
+            <div onclick="window.open('https://www.linkedin.com/in/rishi-mannava-10a045223/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="rishi.png" alt="Rishi Mannava" class="member-image">
                 </div>
-
-                <div onclick="window.open('https://www.linkedin.com/in/jtklenke/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="jt.png" alt="JT Klenke" class="member-image">
-                    </div>
-                    <span class="member-name">JT KLENKE</span>
-                    <span class="member-subtitle">CSE</span>
-                </div>
-
-                <div onclick="window.open('https://www.linkedin.com/in/maxhowens/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="max.png" alt="Max Owens" class="member-image">
-                    </div>
-                    <span class="member-name">MAX OWENS</span>
-                    <span class="member-subtitle">CEO</span>
-                </div>
-
-                <div onclick="window.open('https://www.linkedin.com/in/ryan-ellis-320746219/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="ryan.png" alt="Ryan Ellis" class="member-image">
-                    </div>
-                    <span class="member-name">RYAN ELLIS</span>
-                    <span class="member-subtitle">CTO</span>
-                </div>
-
-                <div onclick="window.open('https://www.linkedin.com/in/mosaia/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="mohamed.png" alt="Mohamed Ahmed" class="member-image">
-                    </div>
-                    <span class="member-name">MOHAMED AHMED</span>
-                    <span class="member-subtitle">HEAD OF MEDIA</span>
-                </div>
+                <span class="member-name">RISHI MANNAVA</span>
+                <span class="member-subtitle">COO</span>
             </div>
 
-            <!-- Page 2 -->
-            <div class="team-page" data-page="1">
-                <div onclick="window.open('https://www.linkedin.com/in/wh474/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="weiyi.png" alt="Weiyi Huang" class="member-image">
-                    </div>
-                    <span class="member-name">WEIYI HUANG</span>
-                    <span class="member-subtitle">LEAD ELECTRICAL ENGINEER</span>
+            <div onclick="window.open('https://www.linkedin.com/in/jtklenke/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="jt.png" alt="JT Klenke" class="member-image">
                 </div>
+                <span class="member-name">JT KLENKE</span>
+                <span class="member-subtitle">CSE</span>
+            </div>
 
-                <div onclick="window.open('https://www.linkedin.com/in/nathan-sheng-44a3852bb/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="nathan.png" alt="Nathan Shang" class="member-image">
-                    </div>
-                    <span class="member-name">NATHAN SHANG</span>
-                    <span class="member-subtitle">LEAD MECHANICAL ENGINEER</span>
+            <div onclick="window.open('https://www.linkedin.com/in/maxhowens/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="max.png" alt="Max Owens" class="member-image">
                 </div>
+                <span class="member-name">MAX OWENS</span>
+                <span class="member-subtitle">CEO</span>
+            </div>
 
-                <div onclick="window.open('https://www.linkedin.com/in/joelbeam5326/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="joel.png" alt="Joel Beam" class="member-image">
-                    </div>
-                    <span class="member-name">JOEL BEAM</span>
-                    <span class="member-subtitle">HEAD OF STRATEGY</span>
+            <div onclick="window.open('https://www.linkedin.com/in/ryan-ellis-320746219/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="ryan.png" alt="Ryan Ellis" class="member-image">
                 </div>
+                <span class="member-name">RYAN ELLIS</span>
+                <span class="member-subtitle">CTO</span>
+            </div>
 
-                <div onclick="window.open('https://www.linkedin.com/in/tech-tim/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="tim.png" alt="Tim Chrisman" class="member-image">
-                    </div>
-                    <span class="member-name">TIM CHRISMAN</span>
-                    <span class="member-subtitle">GOVERNMENT GROWTH</span>
+            <div onclick="window.open('https://www.linkedin.com/in/mosaia/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="mohamed.png" alt="Mohamed Ahmed" class="member-image">
                 </div>
+                <span class="member-name">MOHAMED AHMED</span>
+                <span class="member-subtitle">HEAD OF MEDIA</span>
+            </div>
+        </div>
 
-                <div onclick="window.open('https://www.linkedin.com/in/justin-sadeghian-a4685741/')" class="team-member">
-                    <div class="member-image-container">
-                        <img src="justin.png" alt="Justin Sadeghian" class="member-image">
-                    </div>
-                    <span class="member-name">JUSTIN SADEGHIAN</span>
-                    <span class="member-subtitle">PARTNERSHIPS LEAD</span>
+        <!-- Desktop Page 2 / Tablet hidden -->
+        <div class="team-page" data-page="1">
+            <div onclick="window.open('https://www.linkedin.com/in/wh474/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="weiyi.png" alt="Weiyi Huang" class="member-image">
                 </div>
+                <span class="member-name">WEIYI HUANG</span>
+                <span class="member-subtitle">LEAD ELECTRICAL ENGINEER</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/nathan-sheng-44a3852bb/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="nathan.png" alt="Nathan Shang" class="member-image">
+                </div>
+                <span class="member-name">NATHAN SHANG</span>
+                <span class="member-subtitle">LEAD MECHANICAL ENGINEER</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/joelbeam5326/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="joel.png" alt="Joel Beam" class="member-image">
+                </div>
+                <span class="member-name">JOEL BEAM</span>
+                <span class="member-subtitle">HEAD OF STRATEGY</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/tech-tim/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="tim.png" alt="Tim Chrisman" class="member-image">
+                </div>
+                <span class="member-name">TIM CHRISMAN</span>
+                <span class="member-subtitle">GOVERNMENT GROWTH</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/justin-sadeghian-a4685741/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="justin.png" alt="Justin Sadeghian" class="member-image">
+                </div>
+                <span class="member-name">JUSTIN SADEGHIAN</span>
+                <span class="member-subtitle">PARTNERSHIPS LEAD</span>
+            </div>
+        </div>
+
+        <!-- Tablet Page 1: JT, Max, Ryan -->
+        <div class="team-page" data-page="2">
+            <div onclick="window.open('https://www.linkedin.com/in/jtklenke/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="jt.png" alt="JT Klenke" class="member-image">
+                </div>
+                <span class="member-name">JT KLENKE</span>
+                <span class="member-subtitle">CSE</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/maxhowens/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="max.png" alt="Max Owens" class="member-image">
+                </div>
+                <span class="member-name">MAX OWENS</span>
+                <span class="member-subtitle">CEO</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/ryan-ellis-320746219/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="ryan.png" alt="Ryan Ellis" class="member-image">
+                </div>
+                <span class="member-name">RYAN ELLIS</span>
+                <span class="member-subtitle">CTO</span>
+            </div>
+        </div>
+
+        <!-- Tablet Page 2: Rishi, Mohamed, Weiyi -->
+        <div class="team-page" data-page="3">
+            <div onclick="window.open('https://www.linkedin.com/in/rishi-mannava-10a045223/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="rishi.png" alt="Rishi Mannava" class="member-image">
+                </div>
+                <span class="member-name">RISHI MANNAVA</span>
+                <span class="member-subtitle">COO</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/mosaia/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="mohamed.png" alt="Mohamed Ahmed" class="member-image">
+                </div>
+                <span class="member-name">MOHAMED AHMED</span>
+                <span class="member-subtitle">HEAD OF MEDIA</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/wh474/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="weiyi.png" alt="Weiyi Huang" class="member-image">
+                </div>
+                <span class="member-name">WEIYI HUANG</span>
+                <span class="member-subtitle">LEAD ELECTRICAL ENGINEER</span>
+            </div>
+        </div>
+
+        <!-- Tablet Page 3: Nathan, Joel, Tim -->
+        <div class="team-page" data-page="4">
+            <div onclick="window.open('https://www.linkedin.com/in/nathan-sheng-44a3852bb/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="nathan.png" alt="Nathan Shang" class="member-image">
+                </div>
+                <span class="member-name">NATHAN SHANG</span>
+                <span class="member-subtitle">LEAD MECHANICAL ENGINEER</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/joelbeam5326/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="joel.png" alt="Joel Beam" class="member-image">
+                </div>
+                <span class="member-name">JOEL BEAM</span>
+                <span class="member-subtitle">HEAD OF STRATEGY</span>
+            </div>
+
+            <div onclick="window.open('https://www.linkedin.com/in/tech-tim/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="tim.png" alt="Tim Chrisman" class="member-image">
+                </div>
+                <span class="member-name">TIM CHRISMAN</span>
+                <span class="member-subtitle">GOVERNMENT GROWTH</span>
+            </div>
+        </div>
+
+        <!-- Tablet Page 4: Justin -->
+        <div class="team-page" data-page="5">
+            <div onclick="window.open('https://www.linkedin.com/in/justin-sadeghian-a4685741/')" class="team-member">
+                <div class="member-image-container">
+                    <img src="justin.png" alt="Justin Sadeghian" class="member-image">
+                </div>
+                <span class="member-name">JUSTIN SADEGHIAN</span>
+                <span class="member-subtitle">PARTNERSHIPS LEAD</span>
             </div>
         </div>
 
@@ -3754,7 +3932,7 @@ document.addEventListener('touchmove', e => {
 
 /* ---------- Team Page Navigation ---------- */
 let currentTeamPage = 0;
-const totalTeamPages = 2;
+const totalTeamPages = 6;
 let currentMemberIndex = 0;
 let allMembers = [];
 
@@ -3762,14 +3940,24 @@ function initMobileTeam() {
     allMembers = document.querySelectorAll('.team-member');
     
     if (window.innerWidth <= 768) {
-        // On mobile, show first member
+        // On mobile, show Max Owens (3rd member, index 2) first
         allMembers.forEach((member, index) => {
             member.classList.remove('mobile-active');
-            if (index === 0) member.classList.add('mobile-active');
+            if (index === 2) member.classList.add('mobile-active');
         });
-        currentMemberIndex = 0;
+        currentMemberIndex = 2;
+        
+        // Ensure we're on the correct page (page 0 for Max)
+        const pages = document.querySelectorAll('.team-page');
+        pages.forEach((page, index) => {
+            if (index === 0) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
     } else {
-        // On desktop, remove mobile-active class
+        // On desktop/tablet, remove mobile-active class
         allMembers.forEach(member => {
             member.classList.remove('mobile-active');
         });
@@ -3799,14 +3987,35 @@ function switchTeamPage(direction) {
                 page.classList.remove('active');
             }
         });
+    } else if (window.innerWidth <= 1350) {
+        // Tablet: use pages 2-5
+        const tabletPages = [2, 3, 4, 5];
+        const currentIndex = tabletPages.indexOf(currentTeamPage);
+        let newIndex = currentIndex + direction;
+        
+        if (newIndex < 0) newIndex = tabletPages.length - 1;
+        if (newIndex >= tabletPages.length) newIndex = 0;
+        
+        const newPage = tabletPages[newIndex];
+        const pages = document.querySelectorAll('.team-page');
+        
+        pages.forEach((page, index) => {
+            if (index === newPage) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
+        
+        currentTeamPage = newPage;
     } else {
-        // Desktop: existing page logic
+        // Desktop: use pages 0-1
         const pages = document.querySelectorAll('.team-page');
         
         let newPage = currentTeamPage + direction;
         
-        if (newPage < 0) newPage = totalTeamPages - 1;
-        if (newPage >= totalTeamPages) newPage = 0;
+        if (newPage < 0) newPage = 1;
+        if (newPage > 1) newPage = 0;
         
         pages.forEach((page, index) => {
             if (index === newPage) {
@@ -3819,9 +4028,41 @@ function switchTeamPage(direction) {
         currentTeamPage = newPage;
     }
 }
+// Add this new function
+function handleResize() {
+    initMobileTeam();
+    
+    // Reset to appropriate first page based on screen size
+    const pages = document.querySelectorAll('.team-page');
+    
+    if (window.innerWidth <= 768) {
+        // Mobile - keep current member active
+        return;
+    } else if (window.innerWidth <= 1350) {
+        // Tablet - reset to first tablet page (page 2)
+        currentTeamPage = 2;
+        pages.forEach((page, index) => {
+            if (index === 2) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
+    } else {
+        // Desktop - reset to first desktop page (page 0)
+        currentTeamPage = 0;
+        pages.forEach((page, index) => {
+            if (index === 0) {
+                page.classList.add('active');
+            } else {
+                page.classList.remove('active');
+            }
+        });
+    }
+}
 
-window.addEventListener('resize', initMobileTeam);
-document.addEventListener('DOMContentLoaded', initMobileTeam);
+window.addEventListener('resize', handleResize);
+document.addEventListener('DOMContentLoaded', handleResize);
 
 /* ---------- Custom Scroll Track ---------- */
 function initCustomScrollTrack() {
@@ -3938,6 +4179,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+/* ---------- Show scroll arrow only when overflow exists ---------- */
+function checkOverflow() {
+    document.querySelectorAll('.detail-features').forEach(features => {
+        if (features.scrollHeight > features.clientHeight) {
+            features.classList.add('has-overflow');
+        } else {
+            features.classList.remove('has-overflow');
+        }
+    });
+}
+
+window.addEventListener('resize', checkOverflow);
+setInterval(checkOverflow, 500); // Check every 500ms
 </script>
 
 </body>
