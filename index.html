@@ -555,6 +555,7 @@ body.scroll-locked {
     /* Make detail-features scrollable with indicator */
     .detail-features {
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
         -ms-overflow-style: none;
@@ -871,6 +872,7 @@ body.scroll-locked {
         flex: 1;
         min-height: 0;
         overflow-y: auto;
+        overflow-x: hidden;
         -webkit-overflow-scrolling: touch;
         position: relative;
         scrollbar-width: none;
@@ -932,6 +934,7 @@ body.scroll-locked {
         width: 100%;
         flex-shrink: 0;
         align-items: flex-end;
+        justify-content: center;
     }
     
     .detail-footer span {
@@ -2630,7 +2633,7 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline webkit-playsinline>
+    <video class="bg-video" autoplay muted loop playsinline preload="auto">
         <source src="bg.mp4" type="video/mp4">
     </video>
     <div class="bg-overlay"></div>
@@ -3966,7 +3969,7 @@ function initMobileTeam() {
 
 function switchTeamPage(direction) {
     if (window.innerWidth <= 768) {
-        // Mobile: switch individual members across all pages
+        const mobileMembers = Array.from(allMembers).slice(0, 10);
         allMembers[currentMemberIndex].classList.remove('mobile-active');
         
         currentMemberIndex += direction;
