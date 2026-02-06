@@ -505,11 +505,16 @@ body.scroll-locked {
 
 /* ---------- MOBILE ---------- */
 @media (max-width: 768px) {
-    html {
-        scroll-padding-bottom: 80px; /* Space for Safari UI */
-    }
     
     /* ===== LANDING PAGE ===== */
+    html {
+        scroll-snap-type: none !important;
+    }
+
+
+    section {
+        scroll-snap-align: none !important;
+    }
     
     .navbar {
         height: 70px;
@@ -584,8 +589,8 @@ body.scroll-locked {
     
     #second {
         padding: 16px 16px 12px;
-        height: 100svh;
-        max-height: 100svh;
+        height: 100vh;
+        max-height: 100vh;
         gap: 12px;
         overflow: hidden;
         display: flex;
@@ -897,8 +902,9 @@ body.scroll-locked {
     
     #team {
         padding: 50px 20px 30px;
-        height: 100svh;
-        max-height: 100svh;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -1026,8 +1032,9 @@ body.scroll-locked {
     
     #news {
         padding: 16px;
-        height: 100svh;
-        max-height: 100svh;
+        height: 100vh;
+        height: 100dvh;
+        max-height: 100vh;
         overflow: hidden;
         display: flex;
         flex-direction: column;
@@ -1154,12 +1161,15 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
-        height: 100dvh;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        max-height: none;
         overflow: visible;
-        background: #171717;
-        position: relative;
         scroll-snap-align: start;
-        scroll-snap-stop: always;
+        background: #171717;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
     }
     
     .contact-header {
@@ -2801,10 +2811,10 @@ body.scroll-locked {
             <div class="detail-left">
                 <img src="logo-eagle-black.png" class="eagle detail-anim detail-anim-eagle" alt="Eagle Logo">
                 <div class="detail-header">
-                    <span class="detail-title detail-anim detail-anim-type" data-text="CHORUS"></span>
-                    <span class="detail-subtitle detail-anim detail-anim-type-sub" data-text="/// DISTRIBUTED INTELLIGENCE|GATHERING"></span>
-                </div>
-                <div class="detail-divider detail-anim detail-anim-content"></div>
+                <span class="detail-title detail-anim detail-anim-type" data-text="CHORUS"></span>
+                <span class="detail-subtitle detail-anim detail-anim-type-sub" data-text="/// DISTRIBUTED INTELLIGENCE|GATHERING"></span>
+            </div>
+            <div class="detail-divider detail-anim detail-anim-content"></div>
                 <div class="detail-features detail-anim detail-anim-content">
                     <div class="detail-feature">
                         <div class="feature-title">Collaborative</div>
