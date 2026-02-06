@@ -3933,31 +3933,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-/* ---------- iOS Scroll Snap Fix ---------- */
-if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-    let ticking = false;
-    
-    window.addEventListener('scroll', () => {
-        if (!ticking) {
-            window.requestAnimationFrame(() => {
-                // Force Safari to recalculate snap points
-                document.documentElement.style.scrollSnapType = 'none';
-                setTimeout(() => {
-                    document.documentElement.style.scrollSnapType = 'y mandatory';
-                }, 1);
-                ticking = false;
-            });
-            ticking = true;
-        }
-    });
-    
-    // Also fix on orientation change
-    window.addEventListener('orientationchange', () => {
-        setTimeout(() => {
-            window.scrollTo(0, window.scrollY);
-        }, 100);
-    });
-}
+
 </script>
 
 </body>
