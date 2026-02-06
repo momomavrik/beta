@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MAVRIK</title>
 
 <link href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap" rel="stylesheet">
@@ -581,8 +581,9 @@ body.scroll-locked {
     
     #second {
         padding: 16px 16px 12px;
-        min-height: 100vh;
-        min-height: 100dvh;
+        height: 100vh;
+        height: 100svh;
+        max-height: 100vh;
         gap: 12px;
         overflow: hidden;
         display: flex;
@@ -1153,10 +1154,12 @@ body.scroll-locked {
     /* ===== CONTACT/FOOTER PAGE - FIXED FOR iOS ===== */
     
     #contact {
+        height: 100vh;
+        height: 100svh;
         min-height: 100vh;
         min-height: 100dvh;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        max-height: none;
+        overflow: visible;
         scroll-snap-align: start;
         background: #171717;
         -webkit-overflow-scrolling: touch;
@@ -1214,13 +1217,12 @@ body.scroll-locked {
     .contact-main {
         flex: 1;
         padding: 40px 20px 30px;
-        min-height: 0;
+        min-height: auto;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         background: #171717;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        padding-bottom: calc(30px + env(safe-area-inset-bottom, 0px));
     }
     
     .contact-bg-eagle {
@@ -3930,6 +3932,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+/* ---------- iOS Scroll Snap Fix ---------- */
+if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    let ticking = false;
+    
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                // Force Safari to recalculate snap points
+                document.documentElement.style.scrollSnapType = 'none';
+                setTimeout(() => {
+                    document.documentElement.style.scrollSnapType = 'y mandatory';
+                }, 1);
+                ticking = false;
+            });
+            ticking = true;
+        }
+    });
+    
+    // Also fix on orientation change
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            window.scrollTo(0, window.scrollY);
+        }, 100);
+    });
+}
 </script>
 
 </body>
