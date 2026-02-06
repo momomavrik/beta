@@ -75,12 +75,8 @@ section {
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    /* Performance optimizations for iOS */
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    will-change: auto;
+    pointer-events: none;
+    border: none;
 }
 
 @keyframes scrollBounce {
@@ -2603,9 +2599,13 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" muted loop playsinline>
-        <source src="bg.mp4" type="video/mp4">
-    </video>
+    <iframe 
+        src="https://player.vimeo.com/video/1162654568?background=1&autoplay=1&loop=1&muted=1&playsinline=1&quality=auto" 
+        class="bg-video"
+        frameborder="0" 
+        allow="autoplay; fullscreen" 
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;pointer-events:none;">
+    </iframe>
     <div class="bg-overlay"></div>
 
     <!-- Navigation Bar -->
@@ -4170,25 +4170,6 @@ function checkOverflow() {
 
 window.addEventListener('resize', checkOverflow);
 setInterval(checkOverflow, 500); // Check every 500ms
-
-/* ---------- Fix iOS Landing Video Lag ---------- */
-(function() {
-    const landingVideo = document.querySelector('#landing .bg-video');
-    if (!landingVideo) return;
-    
-    // Pause the video immediately (autoplay will have tried to start it)
-    landingVideo.pause();
-    
-    // Wait for page to be fully ready
-    if (document.readyState === 'complete') {
-        // Already loaded
-        setTimeout(() => landingVideo.play(), 100);
-    } else {
-        window.addEventListener('load', () => {
-            setTimeout(() => landingVideo.play(), 100);
-        });
-    }
-})();
 </script>
 
 </body>
