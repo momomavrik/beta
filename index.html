@@ -75,9 +75,12 @@ section {
     height: 100%;
     object-fit: cover;
     z-index: 0;
-    filter: brightness(0.65);  /* Replaces the overlay darkening */
+    /* Performance optimizations for iOS */
     -webkit-transform: translateZ(0);
     transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    will-change: auto;
 }
 
 @keyframes scrollBounce {
@@ -2600,9 +2603,10 @@ body.scroll-locked {
 <!-- ========== LANDING ========== -->
 <section id="landing">
 
-    <video class="bg-video" autoplay muted loop playsinline>
+    <video class="bg-video" muted loop playsinline>
         <source src="bg.mp4" type="video/mp4">
     </video>
+    <div class="bg-overlay"></div>
 
     <!-- Navigation Bar -->
     <nav class="navbar">
@@ -4166,6 +4170,25 @@ function checkOverflow() {
 
 window.addEventListener('resize', checkOverflow);
 setInterval(checkOverflow, 500); // Check every 500ms
+
+/* ---------- Fix iOS Landing Video Lag ---------- */
+(function() {
+    const landingVideo = document.querySelector('#landing .bg-video');
+    if (!landingVideo) return;
+    
+    // Pause the video immediately (autoplay will have tried to start it)
+    landingVideo.pause();
+    
+    // Wait for page to be fully ready
+    if (document.readyState === 'complete') {
+        // Already loaded
+        setTimeout(() => landingVideo.play(), 100);
+    } else {
+        window.addEventListener('load', () => {
+            setTimeout(() => landingVideo.play(), 100);
+        });
+    }
+})();
 </script>
 
 </body>
